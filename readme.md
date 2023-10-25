@@ -29,12 +29,18 @@ MIN-MAX, COUNT-AVG-SUM, GROUP BY, JOINS (INNER, OUTER, LEFT, RIGHT
 	#ilk 3 soruyu join kullanmadan yazın.
 	1) Öğrencinin adını, soyadını ve kitap aldığı tarihleri listeleyin.
 	
+    SELECT ogrenci.ograd, ogrenci.ogrsoyad, islem.atarih
+    FROM ogrenci, islem
+    WHERE ogrenci.ogrno = islem.islemno;
 
 	
 	2) Fıkra ve hikaye türündeki kitapların adını ve türünü listeleyin.
 	
+
 	
 	3) 10B veya 10C sınıfındaki öğrencilerin numarasını, adını, soyadını ve okuduğu kitapları listeleyin.
+
+
 	
 	#join ile yazın
 	4) Öğrencinin adını, soyadını ve kitap aldığı tarihleri listeleyin.
@@ -69,47 +75,94 @@ MIN-MAX, COUNT-AVG-SUM, GROUP BY, JOINS (INNER, OUTER, LEFT, RIGHT
 	
 	14) Tüm kitapların ortalama sayfa sayısını bulunuz.
 	#AVG
+
+	SELECT AVG(sayfasayisi) AS ortalama_sayfa_sayisi
+    FROM kitap;
 	
 	15) Sayfa sayısı ortalama sayfanın üzerindeki kitapları listeleyin.
 	
+	SELECT kitap.kitapadi, kitap.sayfasayisi
+    FROM kitap
+    WHERE kitap.sayfasayisi > (SELECT AVG(sayfasayisi) FROM kitap);
 	
 	16) Öğrenci tablosundaki öğrenci sayısını gösterin
 	
+     SELECT COUNT(*) AS ogrenci_sayisi
+     FROM ogrenci;
+
 	
 	17) Öğrenci tablosundaki toplam öğrenci sayısını toplam sayı takma(alias kullanımı) adı ile listeleyin.
+
+	SELECT COUNT(*) AS toplam_sayi
+    FROM ogrenci;
 	
 	
 	18) Öğrenci tablosunda kaç farklı isimde öğrenci olduğunu listeleyiniz.
 	
+	SELECT COUNT(DISTINCT CONCAT(ograd, ' ', ogrsoyad)) AS farkli_isim_sayisi
+    FROM ogrenci;
 	
 	19) En fazla sayfa sayısı olan kitabın sayfa sayısını listeleyiniz.
 	
+	SELECT MAX(kitap.sayfasayisi) AS en_fazla_sayfa_sayisi
+    FROM kitap;
 	
 	20) En fazla sayfası olan kitabın adını ve sayfa sayısını listeleyiniz.
 	
+	SELECT kitap.kitapadi, kitap.sayfasayisi
+    FROM kitap
+    WHERE kitap.sayfasayisi = (SELECT MAX(sayfasayisi) FROM kitap);
 	
 	21) En az sayfa sayısı olan kitabın sayfa sayısını listeleyiniz.
 	
+	SELECT MIN(kitap.sayfasayisi) AS en_az_sayfa_sayisi
+    FROM kitap;
+
 	
 	22) En az sayfası olan kitabın adını ve sayfa sayısını listeleyiniz.
 	
+	SELECT kitap.kitapadi, kitap.sayfasayisi
+    FROM kitap
+    ORDER BY kitap.sayfasayisi ASC
+    LIMIT 1;
+
+
 	
 	23) Dram türündeki en fazla sayfası olan kitabın sayfa sayısını bulunuz.
 	
+
+
 	
 	24) numarası 15 olan öğrencinin okuduğu toplam sayfa sayısını bulunuz.
+
+
 	
 	
 	25) İsme göre öğrenci sayılarının adedini bulunuz.(Örn: ali 5 tane, ahmet 8 tane )
 
+
+      SELECT ogrenci.ograd, COUNT(*) AS ogrenci_sayisi
+      FROM ogrenci
+      GROUP BY ogrenci.ograd;
 	
 	26) Her sınıftaki öğrenci sayısını bulunuz.
 	
+
+     SELECT sinif, COUNT(*) AS ogrenci_sayisi
+     FROM ogrenci
+     GROUP BY sinif;
+     
 	
 	27) Her sınıftaki erkek ve kız öğrenci sayısını bulunuz.
+
+	SELECT sinif, cinsiyet, COUNT(*) AS ogrenci_sayisi
+    FROM ogrenci
+     GROUP BY sinif, cinsiyet;
 	
 	
 	28) Her öğrencinin adını, soyadını ve okuduğu toplam sayfa sayısını büyükten küçüğe doğru listeleyiniz.
 	
 	
 	29) Her öğrencinin okuduğu kitap sayısını getiriniz.
+
+     
